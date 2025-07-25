@@ -1,0 +1,96 @@
+<% layout('/layouts/boilerplate') %>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-white border-0 text-center py-4">
+                <h2 class="mb-0" style="color: #2563EB; font-weight: 600;">Edit your Listing</h2>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-medium">Title</label>
+                        <input class="form-control form-control-lg" type="text" id="title" name="listing[title]" value="<%= listing.title %>" placeholder="Enter title" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid title.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label fw-medium">Description</label>
+                        <textarea class="form-control" id="description" name="listing[description]" rows="4" placeholder="Describe your listing..." required><%= listing.description %></textarea>
+                        <div class="invalid-feedback">
+                            Please provide a description.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="currentImage" class="form-label fw-medium">Current Listing Image</label>
+                        <img src="<%= originalImageurl %>" alt="Current Listing Image" class="img-fluid mb-3">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label fw-medium">Upload new image</label>
+                        <input class="form-control" type="file" id="image" name="listing[imageUpload]" accept="image/*">
+                        <div class="invalid-feedback">
+                            Please provide a valid image.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label fw-medium">Category</label>
+                        <select class="form-control" id="category" name="listing[category]" required>
+                            <option value="">Select a category</option>
+                            <option value="apartment" <%= listing.category === 'apartment' ? 'selected' : '' %>>Apartment</option>
+                            <option value="house" <%= listing.category === 'house' ? 'selected' : '' %>>House</option>
+                            <option value="villa" <%= listing.category === 'villa' ? 'selected' : '' %>>Villa</option>
+                            <option value="cabin" <%= listing.category === 'cabin' ? 'selected' : '' %>>Cabin</option>
+                            <option value="hotel" <%= listing.category === 'hotel' ? 'selected' : '' %>>Hotel</option>
+                            <option value="resort" <%= listing.category === 'resort' ? 'selected' : '' %>>Resort</option>
+                            <option value="cottage" <%= listing.category === 'cottage' ? 'selected' : '' %>>Cottage</option>
+                            <option value="loft" <%= listing.category === 'loft' ? 'selected' : '' %>>Loft</option>
+                            <option value="studio" <%= listing.category === 'studio' ? 'selected' : '' %>>Studio</option>
+                            <option value="penthouse" <%= listing.category === 'penthouse' ? 'selected' : '' %>>Penthouse</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a category.
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="price" class="form-label fw-medium">Price</label>
+                            <input class="form-control" type="number" id="price" name="listing[price]" value="<%= listing.price %>" placeholder="Enter price" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid price.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="country" class="form-label fw-medium">Country</label>
+                            <input class="form-control" type="text" id="country" name="listing[country]" value="<%= listing.country %>" placeholder="Enter country" required>
+                            <div class="invalid-feedback">
+                                Please provide a country.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="location" class="form-label fw-medium">Location</label>
+                        <input class="form-control" type="text" id="location" name="listing[location]" value="<%= listing.location %>" placeholder="Enter location" required>
+                        <div class="invalid-feedback">
+                            Please provide a location.
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-lg" type="submit" style="background-color: #2563EB; border-color: #2563EB;">
+                            <i class="fas fa-edit me-2"></i>Update Listing
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

@@ -1,0 +1,128 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top shadow-sm" style="padding: 0.75rem 0;">
+  <div class="container-fluid px-4">
+
+    <!-- Logo + Name -->
+    <a class="navbar-brand d-flex align-items-center me-4" href="/listings" style="text-decoration: none;">
+      <i class="fa-regular fa-compass me-2" style="font-size: 2rem; color: #2e6bdb;"></i>
+      <span style="font-size: 1.5rem; font-weight: 700; color: #2e6bdb; letter-spacing: -0.02em;">StayVerse</span>
+    </a>
+
+    <!-- Airbnb-style Search Bar -->
+    <div class="search-container flex-grow-1 mx-4">
+      <form action="/listings" method="GET" class="search-form">
+        <div class="search-bar">
+          <div class="search-section">
+            <label class="search-label">Where</label>
+            <input type="text" name="location" placeholder="Search destinations" class="search-input" value="<%= typeof query !== 'undefined' && query.location ? query.location : '' %>">
+          </div>
+          <div class="search-divider"></div>
+          <div class="search-section">
+            <label class="search-label">Category</label>
+            <select name="category" class="search-input search-select">
+              <option value="">Any type</option>
+              <option value="apartment" <%= typeof query !== 'undefined' && query.category === 'apartment' ? 'selected' : '' %>>Apartment</option>
+              <option value="house" <%= typeof query !== 'undefined' && query.category === 'house' ? 'selected' : '' %>>House</option>
+              <option value="villa" <%= typeof query !== 'undefined' && query.category === 'villa' ? 'selected' : '' %>>Villa</option>
+              <option value="cabin" <%= typeof query !== 'undefined' && query.category === 'cabin' ? 'selected' : '' %>>Cabin</option>
+              <option value="hotel" <%= typeof query !== 'undefined' && query.category === 'hotel' ? 'selected' : '' %>>Hotel</option>
+              <option value="resort" <%= typeof query !== 'undefined' && query.category === 'resort' ? 'selected' : '' %>>Resort</option>
+              <option value="cottage" <%= typeof query !== 'undefined' && query.category === 'cottage' ? 'selected' : '' %>>Cottage</option>
+              <option value="loft" <%= typeof query !== 'undefined' && query.category === 'loft' ? 'selected' : '' %>>Loft</option>
+              <option value="studio" <%= typeof query !== 'undefined' && query.category === 'studio' ? 'selected' : '' %>>Studio</option>
+              <option value="penthouse" <%= typeof query !== 'undefined' && query.category === 'penthouse' ? 'selected' : '' %>>Penthouse</option>
+            </select>
+          </div>
+          <div class="search-divider"></div>
+          <div class="search-section">
+            <label class="search-label">Price Range</label>
+            <select name="priceRange" class="search-input search-select">
+              <option value="">Any price</option>
+              <option value="0-5000" <%= typeof query !== 'undefined' && query.priceRange === '0-5000' ? 'selected' : '' %>>₹0 - ₹5,000</option>
+              <option value="5000-10000" <%= typeof query !== 'undefined' && query.priceRange === '5000-10000' ? 'selected' : '' %>>₹5,000 - ₹10,000</option>
+              <option value="10000-20000" <%= typeof query !== 'undefined' && query.priceRange === '10000-20000' ? 'selected' : '' %>>₹10,000 - ₹20,000</option>
+              <option value="20000-50000" <%= typeof query !== 'undefined' && query.priceRange === '20000-50000' ? 'selected' : '' %>>₹20,000 - ₹50,000</option>
+              <option value="50000+" <%= typeof query !== 'undefined' && query.priceRange === '50000+' ? 'selected' : '' %>>₹50,000+</option>
+            </select>
+          </div>
+          <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Middle Navigation (Home, Listings...) -->
+    <div class="d-flex me-auto">
+      <a class="nav-link fw-medium px-3 py-2" href="/listings" style="color: #222; text-decoration: none; font-size: 1rem;"><b>Explore</b></a>  
+    </div>
+
+    <!-- Right Auth Buttons -->
+    <div class="d-flex ms-auto align-items-center">
+      <!-- Mobile Search Toggle -->
+      <button class="mobile-search-toggle me-2" type="button" onclick="toggleMobileSearch()">
+        <i class="fas fa-search"></i>
+      </button>
+      
+      <a class="nav-link fw-medium px-3 py-2" href="/listings/new" style="color: #222; text-decoration: none; font-size: 1rem;"><b>Add new Listing</b></a>
+      <% if (currentUser) { %>
+        <!-- Logged in user -->
+        <form action="/logout" method="POST" class="d-inline">
+          <button type="submit" class="btn btn-link text-decoration-none fw-medium px-3 py-2" style="color: #222; font-size: 1rem; border: none; background: none;">Logout</button>
+        </form>
+      <% } else { %>
+        <!-- Not logged in -->
+        <a class="text-decoration-none fw-medium px-3 py-2" href="/signup" style="color: #222; font-size: 1rem;"><b>Sign up</b></a>
+        <a class="text-decoration-none fw-medium px-3 py-2" href="/login" style="color: #222; font-size: 1rem;"><b>Log in</b></a>
+      <% } %>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay">
+  <div class="mobile-search-content">
+    <div class="mobile-search-header">
+      <h5>Search StayVerse</h5>
+      <button class="mobile-search-close" onclick="toggleMobileSearch()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <form action="/listings" method="GET" class="mobile-search-form">
+      <div class="mobile-search-section">
+        <label class="mobile-search-label">Where</label>
+        <input type="text" name="location" placeholder="Search destinations" class="mobile-search-input" value="<%= typeof query !== 'undefined' && query.location ? query.location : '' %>">
+      </div>
+      <div class="mobile-search-section">
+        <label class="mobile-search-label">Category</label>
+        <select name="category" class="mobile-search-input">
+          <option value="">Any type</option>
+          <option value="apartment" <%= typeof query !== 'undefined' && query.category === 'apartment' ? 'selected' : '' %>>Apartment</option>
+          <option value="house" <%= typeof query !== 'undefined' && query.category === 'house' ? 'selected' : '' %>>House</option>
+          <option value="villa" <%= typeof query !== 'undefined' && query.category === 'villa' ? 'selected' : '' %>>Villa</option>
+          <option value="cabin" <%= typeof query !== 'undefined' && query.category === 'cabin' ? 'selected' : '' %>>Cabin</option>
+          <option value="hotel" <%= typeof query !== 'undefined' && query.category === 'hotel' ? 'selected' : '' %>>Hotel</option>
+          <option value="resort" <%= typeof query !== 'undefined' && query.category === 'resort' ? 'selected' : '' %>>Resort</option>
+          <option value="cottage" <%= typeof query !== 'undefined' && query.category === 'cottage' ? 'selected' : '' %>>Cottage</option>
+          <option value="loft" <%= typeof query !== 'undefined' && query.category === 'loft' ? 'selected' : '' %>>Loft</option>
+          <option value="studio" <%= typeof query !== 'undefined' && query.category === 'studio' ? 'selected' : '' %>>Studio</option>
+          <option value="penthouse" <%= typeof query !== 'undefined' && query.category === 'penthouse' ? 'selected' : '' %>>Penthouse</option>
+        </select>
+      </div>
+      <div class="mobile-search-section">
+        <label class="mobile-search-label">Price Range</label>
+        <select name="priceRange" class="mobile-search-input">
+          <option value="">Any price</option>
+          <option value="0-5000" <%= typeof query !== 'undefined' && query.priceRange === '0-5000' ? 'selected' : '' %>>₹0 - ₹5,000</option>
+          <option value="5000-10000" <%= typeof query !== 'undefined' && query.priceRange === '5000-10000' ? 'selected' : '' %>>₹5,000 - ₹10,000</option>
+          <option value="10000-20000" <%= typeof query !== 'undefined' && query.priceRange === '10000-20000' ? 'selected' : '' %>>₹10,000 - ₹20,000</option>
+          <option value="20000-50000" <%= typeof query !== 'undefined' && query.priceRange === '20000-50000' ? 'selected' : '' %>>₹20,000 - ₹50,000</option>
+          <option value="50000+" <%= typeof query !== 'undefined' && query.priceRange === '50000+' ? 'selected' : '' %>>₹50,000+</option>
+        </select>
+      </div>
+      <button type="submit" class="mobile-search-button">
+        <i class="fas fa-search me-2"></i>Search
+      </button>
+    </form>
+  </div>
+</div>
