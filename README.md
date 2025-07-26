@@ -6,6 +6,11 @@
 
 A modern, full-stack vacation rental platform inspired by Airbnb. Built with Node.js, Express, and MongoDB, featuring property listings, user authentication, reviews, and an intuitive search system.
 
+## 🎥 Project Demo
+
+👉 [Watch StayVerse Demo Video](https://raw.githubusercontent.com/Praveen-koujalagi/StayVerse/main/assets/StayVerse%20(demo).mp4)
+
+
 ## ✨ Features
 
 ### 🏡 **Property Management**
